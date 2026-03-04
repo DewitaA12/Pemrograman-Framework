@@ -6,13 +6,18 @@ const produk = () => {
   const { push } = useRouter();
 
   useEffect(() => {
-    if (!isLogin) {
+    const status = localStorage.getItem("isLogin");
+    if (status === "true") {
+      setIsLogin(true);
+    } else {
       push("/auth/login");
     }
-  }, []);
+  }, [push]);
 
   return (
-    <div>Produk User Page</div>
+    <div>
+      <h1>Produk User Page</h1>
+    </div>
   );
 };
 
