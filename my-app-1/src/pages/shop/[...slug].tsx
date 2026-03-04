@@ -9,7 +9,8 @@ const { query } = useRouter();
     <div>
       <h1>Halaman Toko</h1>
       <p>
-        Toko: {query.slug && query.slug[0] + "-" + query.slug[1]}
+        {/* Toko: {query.slug && query.slug[0] + "-" + query.slug[1]} */}
+        Toko: {Array.isArray(query.slug) ? query.slug.join(".") : query.slug}
         </p>
     </div>
   );
