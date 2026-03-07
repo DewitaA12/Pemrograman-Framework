@@ -1,0 +1,15 @@
+.container {
+  padding: 20px;
+  text-align: center;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: blue;
+}
+
+.link {
+  color: red;
+  text-decoration: underline;
+}
