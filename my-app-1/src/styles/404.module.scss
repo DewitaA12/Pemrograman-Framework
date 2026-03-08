@@ -1,0 +1,45 @@
+.error {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+
+  &__box {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  }
+
+  &__image {
+    width: 250px;
+    margin-bottom: 20px;
+  }
+
+  &__button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #1e3a8a;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s;
+  }
+
+  &__button:hover {
+    background: #3b82f6;
+  }
+
+  h1 {
+    color: #1e3a8a;
+  }
+
+  p {
+    color: #555;
+  }
+}
