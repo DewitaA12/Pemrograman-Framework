@@ -22,16 +22,17 @@ const kategori = () => {
   // },[]);
 
   useEffect(() => {
+  setTimeout(() => {
     fetch("/api/produk")
       .then((response) => response.json())
       .then((responsedata) => {
         setProducts(responsedata.data);
-        // console.log("Data produk:", responsedata.data);
       })
       .catch((error) => {
         console.error("Error fetching produk:", error);
       });
-  }, []);
+  }, 2000);
+}, []);
 
   return (
     <div>
