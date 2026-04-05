@@ -1,5 +1,5 @@
 import TampilanProduk from "../../views/produk";
-// import { ProductType } from "../types/Product.type";
+import { ProductType } from "../types/Product.type";
 
 const halamanProdukServer = (props: { products: ProductType[] }) => {
   const { products } = props;
@@ -22,7 +22,7 @@ export async function getServerSideProps() {
   // console.log("Data produk yang diambil dari API:", respone);
   return {
     props: {
-      products: respone.data, // Pastikan untuk memberikan nilai default jika data tidak tersedia
+      products: respone,
     },
   };
 }
