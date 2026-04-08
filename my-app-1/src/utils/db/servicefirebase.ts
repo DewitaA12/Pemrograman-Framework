@@ -1,5 +1,5 @@
+import { getFirestore, collection, getDocs, Firestore, getDoc, doc } from "firebase/firestore";
 import { db } from "./firebase";
-import { collection, getDocs } from "firebase/firestore";
 
 export async function retrieveProducts(collectionName: string): Promise<any[]> {
   const querySnapshot = await getDocs(collection(db, collectionName));
@@ -18,4 +18,16 @@ export async function retrieveProducts(collectionName: string): Promise<any[]> {
   });
 
   return data;
+}
+
+export async function retrieveDataByID(collectionName: string, id: string) {
+    const snapshot = await getDoc(doc(db, collectionName, id));
+    if (!snapshot.exists()) {
+        return null;
+    }
+    const data = {
+        id: snapshot.id,
+        ...snapshot.data()
+    };
+    return data;
 }
