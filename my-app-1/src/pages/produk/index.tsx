@@ -24,7 +24,7 @@ const kategori = () => {
 
   return (
     <div>
-      <TampilanProduk products={isLoading ? [] : data.data} />
+      <TampilanProduk products={isLoading ? [] : data?.data ?? []} />
     </div>
   );
 };
