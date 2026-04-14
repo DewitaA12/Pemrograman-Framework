@@ -19,10 +19,9 @@ export const authOptions: NextAuthOptions = {
           id: "1",
           email: credentials?.email,
           password: credentials?.password,
-          fullname: credentials?.fullname, // ← line 22
+          fullname: credentials?.fullname,
         };
         if (user) {
-          // console.log("user", user)
           return user
         } else {
           return null
@@ -34,9 +33,8 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, account, profile, user }: any) {
       if (account?.provider === "credentials" && user) {
         token.email = user.email;
-        token.fullname = user.fullname; // ← tambah
+        token.fullname = user.fullname;
       }
-      // console.log("jwt callback", { token, account, profile, user })
       return token
     },
     async session({ session, token }: any) {
@@ -44,11 +42,14 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email;
       }
       if (token.fullname) {
-        session.user.fullname = token.fullname; // ← tambah
+        session.user.fullname = token.fullname;
       }
-      // console.log("session callback", { session, token })
       return session
     },
+  },
+  
+  pages: {
+    signIn: "/auth/login",
   },
 };
 
