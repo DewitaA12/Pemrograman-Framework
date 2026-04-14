@@ -1,40 +1,37 @@
 import Link from "next/link";
-import style from "./register.module.scss";
+import style from "../..//auth/register/register.module.scss";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
 const TampilanRegister = () => {
-
-  // STATE & ROUTER
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const { push } = useRouter();
+  const [error, setError] = useState("");
 
-  // HANDLE SUBMIT — ambil data form, kirim ke API, handle result
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setError("");
     setIsLoading(true);
     event.preventDefault();
 
-    // Ambil data dari form
     const form = event.currentTarget;
     const formData = new FormData(event.currentTarget);
-    const email    = formData.get("email")    as string;
+    const email = formData.get("email") as string;
     const fullname = formData.get("Fullname") as string;
     const password = formData.get("Password") as string;
 
-    // Kirim POST request ke API register
     const response = await fetch("/api/register", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ email, fullname, password }),
     });
 
-    // Handle response dari API
     if (response.status === 200) {
       form.reset();
+      // event.currentTarget.reset();
       setIsLoading(false);
-      push("/auth/login"); // redirect ke halaman login jika sukses
+      push("/auth/login");
     } else {
       setIsLoading(false);
       setError(
@@ -43,16 +40,10 @@ const TampilanRegister = () => {
     }
   };
 
-  // RENDER
   return (
     <div className={style.register}>
-
-      {/* Error message — tampil hanya jika ada error */}
       {error && <p className={style.register__error}>{error}</p>}
-
-      {/* Judul halaman */}
       <h1 className={style.register__title}>Halaman Register</h1>
-
       <div className={style.register__form}>
         <form action="" onSubmit={handleSubmit}>
 
@@ -73,7 +64,7 @@ const TampilanRegister = () => {
             />
           </div>
 
-          {/* Input Full Name */}
+          {/* Input Fullname */}
           <div className={style.register__form__item}>
             <label
               htmlFor="Fullname"
@@ -107,24 +98,21 @@ const TampilanRegister = () => {
             />
           </div>
 
-          {/* Button Register — disabled & teks berubah saat loading */}
+          {/* Button Register dengan Loading */}
           <button
             type="submit"
-            disabled={isLoading}
             className={style.register__form__item__button}
+            disabled={isLoading}
           >
             {isLoading ? "Loading..." : "Register"}
           </button>
 
         </form>
-
-        {/* Link ke halaman login */}
         <br />
         <p className={style.register__form__item__text}>
           Sudah punya akun?{" "}
           <Link href="/auth/login">Ke Halaman Login</Link>
         </p>
-
       </div>
     </div>
   );
