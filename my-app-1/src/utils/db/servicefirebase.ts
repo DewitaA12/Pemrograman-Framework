@@ -7,6 +7,7 @@ import {
   query,
   addDoc,
   where,
+  updateDoc,  // tambahan untuk update data Google user
 } from "firebase/firestore";
 import app from "./firebase";
 import bcrypt from "bcryptjs";
@@ -28,8 +29,7 @@ export async function retrieveDataByID(collectionName: string, id: string) {
   return data;
 }
 
-export async function signIn(
-  email: string) {
+export async function signIn(email: string) {
   const q = query(collection(db, "users"), where("email", "==", email));
   const querySnapshot = await getDocs(q);
   const data = querySnapshot.docs.map((doc) => ({
@@ -84,5 +84,46 @@ export async function signUp(
           message: error.message,
         });
       });
+  }
+}
+
+// Fungsi baru untuk Google login (dari jobsheet)
+export async function signInWithGoogle(userData: any, callback: Function) {
+  try {
+    const q = query(
+      collection(db, "users"),
+      where("email", "==", userData.email)
+    );
+
+    const querySnapshot = await getDocs(q);
+    const data: any = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    if (data.length > 0) {
+      // User sudah ada di database, ambil role lama lalu update datanya
+      userData.role = data[0].role;
+      await updateDoc(doc(db, "users", data[0].id), userData);
+      callback({
+        status: true,
+        message: "User registered and logged in with Google",
+        data: userData,
+      });
+    } else {
+      // User baru, simpan ke database dengan role default member
+      userData.role = "member";
+      await addDoc(collection(db, "users"), userData);
+      callback({
+        status: true,
+        message: "User registered and logged in with Google",
+        data: userData,
+      });
+    }
+  } catch (error: any) {
+    callback({
+      status: false,
+      message: "Failed to register user with Google",
+    });
   }
 }
