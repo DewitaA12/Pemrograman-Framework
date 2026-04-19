@@ -1,7 +1,8 @@
-import { signInWithGoogle } from "@/utils/db/servicefirebase";
+import { signInWithGoogle, signInWithGitHub } from "@/utils/db/servicefirebase";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import GitHubProvider from "next-auth/providers/github";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -20,22 +21,30 @@ export const authOptions: NextAuthOptions = {
         return null;
       },
     }),
+
+    // ✅ Google Provider
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
+    }),
+
+    // ✅ GitHub Provider (Tugas Mandiri No. 3)
+    GitHubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID || "",
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || "",
     }),
   ],
 
   callbacks: {
     async jwt({ token, account, profile, user }: any) {
-      // Jika login dengan credentials
+      // Login via Credentials
       if (account?.provider === "credentials" && user) {
         token.email = user.email;
         token.fullname = user.fullname;
         token.role = user.role;
       }
 
-      // Jika login dengan Google
+      // Login via Google
       if (account?.provider === "google") {
         const data = {
           fullname: user.name,
@@ -44,10 +53,27 @@ export const authOptions: NextAuthOptions = {
           type: account.provider,
         };
 
-        // console.log("Google login data", { data });
-
         await signInWithGoogle(data, (result: any) => {
-          // Pastikan mengecek result.status sesuai dengan object yang dikirim
+          if (result.status) {
+            token.fullname = result.data.fullname;
+            token.email = result.data.email;
+            token.image = result.data.image;
+            token.type = result.data.type;
+            token.role = result.data.role;
+          }
+        });
+      }
+
+      // ✅ Login via GitHub (Tugas Mandiri No. 3)
+      if (account?.provider === "github") {
+        const data = {
+          fullname: user.name || profile?.login,
+          email: user.email,
+          image: user.image,
+          type: account.provider,
+        };
+
+        await signInWithGitHub(data, (result: any) => {
           if (result.status) {
             token.fullname = result.data.fullname;
             token.email = result.data.email;
@@ -62,23 +88,11 @@ export const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token }: any) {
-      if (token.email) {
-        session.user.email = token.email;
-      }
-      if (token.fullname) {
-        session.user.fullname = token.fullname;
-      }
-      if (token.image) {
-        session.user.image = token.image;
-      }
-      if (token.role) {
-        session.user.role = token.role;
-      }
-      if (token.type) {
-        session.user.type = token.type;
-      }
-
-      // console.log("Session callback", { session, token });
+      if (token.email) session.user.email = token.email;
+      if (token.fullname) session.user.fullname = token.fullname;
+      if (token.image) session.user.image = token.image;
+      if (token.role) session.user.role = token.role;
+      if (token.type) session.user.type = token.type;
       return session;
     },
   },
