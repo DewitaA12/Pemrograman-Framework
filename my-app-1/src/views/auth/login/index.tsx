@@ -47,10 +47,7 @@ const Tampilanlogin = () => {
 
             {/* Input Email */}
             <div className={style.login__form__item}>
-              <label
-                htmlFor="email"
-                className={style.login__form__item__label}
-              >
+              <label htmlFor="email" className={style.login__form__item__label}>
                 Email
               </label>
               <input
@@ -64,10 +61,7 @@ const Tampilanlogin = () => {
 
             {/* Input Password */}
             <div className={style.login__form__item}>
-              <label
-                htmlFor="password"
-                className={style.login__form__item__label}
-              >
+              <label htmlFor="password" className={style.login__form__item__label}>
                 Password
               </label>
               <input
@@ -79,22 +73,39 @@ const Tampilanlogin = () => {
               />
             </div>
 
-            {/* Button login dengan Loading */}
-            <button
-              type="submit"
-              className={style.login__form__item__button}
-              disabled={isLoading}
-            >
-              {isLoading ? "Loading..." : "login"}
-            </button>{" "}
-            <br /> <br />
-             <button
-              onClick={() => signIn("google", { callbackUrl, redirect: false })}
-              className={style.login__form__item__button}
-              disabled={isLoading}
-            >
-              {isLoading ? "Loading..." : "sign in with google"}
-            </button>
+            {/* ✅ Setiap tombol dibungkus div — tidak ada <br> di dalam <form> */}
+            <div className={style.login__form__item}>
+              <button
+                type="submit"
+                className={style.login__form__item__button}
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading..." : "login"}
+              </button>
+            </div>
+
+            <div className={style.login__form__item}>
+              <button
+                type="button"
+                onClick={() => signIn("google", { callbackUrl, redirect: false })}
+                className={style.login__form__item__button}
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading..." : "sign in with google"}
+              </button>
+            </div>
+
+            {/* ✅ Tombol GitHub - Tugas Mandiri No. 3 */}
+            <div className={style.login__form__item}>
+              <button
+                type="button"
+                onClick={() => signIn("github", { callbackUrl, redirect: false })}
+                className={style.login__form__item__button}
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading..." : "sign in with github"}
+              </button>
+            </div>
 
           </form>
           <br />
