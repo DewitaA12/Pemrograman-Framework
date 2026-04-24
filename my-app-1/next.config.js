@@ -3,18 +3,39 @@ const nextConfig = {
   reactStrictMode: true,
 
   images: {
+    // gabungkan SEMUA config di sini
     remotePatterns: [
       {
-        // Avatar dari Google
         protocol: "https",
         hostname: "lh3.googleusercontent.com",
       },
       {
-        // Avatar dari GitHub
         protocol: "https",
         hostname: "avatars.githubusercontent.com",
       },
+       {
+        protocol: "https",
+        hostname: "cdn.salla.sa",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "down-id.img.susercontent.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "image.made-in-china.com",
+        pathname: "/**",
+      },
+     {
+       protocol: "https",
+       hostname: "images.tokopedia.net",
+       pathname: "/**",
+      },
     ],
+
+    domains: ["static-id.zacdn.com", "dynamic.zacdn.com"],
   },
 };
 

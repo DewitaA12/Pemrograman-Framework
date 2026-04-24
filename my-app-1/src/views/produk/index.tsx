@@ -1,5 +1,6 @@
 import styles from "../../pages/produk/product.module.scss";
-import Link from "next/link"; 
+import Link from "next/link";
+import Image from "next/image";
 
 type ProductType = {
   id: string;
@@ -13,26 +14,35 @@ const TampilanProduk = ({ products }: { products: ProductType[] }) => {
   return (
     <div className={styles.produk}>
       <h1 className={styles.produk__title}>Daftar Produk</h1>
+
       <div className={styles.produk__content}>
         {products.length > 0 ? (
-          products.map((products: ProductType) => (
-            // Ganti <div> menjadi <Link>
+          products.map((product: ProductType) => (
             <Link
-              href={`/produk/${products.id}`}
-              key={products.id}
+              href={`/produk/${product.id}`}
+              key={product.id}
               className={styles.produk__content__item}
             >
               <div className={styles.produk__content__item__image}>
-                <img src={products.image} alt={products.name} width={200} />
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  width={200}
+                  height={200}
+                  className={styles.produk__image}
+                />
               </div>
+
               <h4 className={styles.produk__content__item__name}>
-                {products.name}
+                {product.name}
               </h4>
+
               <p className={styles.produk__content__item__category}>
-                {products.category}
+                {product.category}
               </p>
+
               <p className={styles.produk__content__item__price}>
-                Rp {products.price.toLocaleString("id-ID")}
+                Rp {product.price.toLocaleString("id-ID")}
               </p>
             </Link>
           ))
