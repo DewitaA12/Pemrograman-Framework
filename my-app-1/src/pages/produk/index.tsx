@@ -11,11 +11,11 @@ const kategori = () => {
   // console.log("products:", products);
 
   const { data, error, isLoading } = useSWR("/api/produk", fetcher);
-  //cek apakah data, error, dan isLoading sudah benar...
+  // cek apakah data, error, dan isLoading sudah benar...
 
   return (
     <div>
-      <TampilanProduk products={isLoading ? [] : data.data} />
+      <TampilanProduk products={isLoading ? [] : data?.data} />
     </div>
   );
 };
