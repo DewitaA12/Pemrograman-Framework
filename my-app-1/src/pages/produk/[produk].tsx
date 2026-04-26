@@ -29,37 +29,9 @@ const HalamanProduk = ({ product }: { product: ProductType }) => {
 export default HalamanProduk;
 
 // {digunakan server-side rendering}
-// export async function getServerSideProps({ params }: { params: { produk: string } }) {
-//   const res = await fetch(`http://localhost:3000/api/produk/${params?.produk}`);
-//   const response = await res.json();
-//   // console.log("Data produk yang diambil dari API:", response);
-//   return {
-//     props: {
-//       product: response.data,
-//     },
-//   };
-// }
-
-// {digunakan static-site generation}
-export async function getStaticPaths() {
-  const res = await fetch("http://localhost:3000/api/produk");
+export async function getServerSideProps({ params }: { params: { produk: string } }) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/produk`);
   const response = await res.json();
-
-  const paths = response.data.map((product: ProductType) => ({
-    params: { produk: product.id },
-  }));
-  // console.log("Paths yang dihasilkan untuk produk:", paths);
-  return {
-    paths,
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }: { params: { produk: string } }) {
-  const res = await fetch(`http://localhost:3000/api/produk/${params?.produk}`);
-  // const const response: ProductType[] = await res.json();
-  const response: { data: ProductType[] } = await res.json();
-
   // console.log("Data produk yang diambil dari API:", response);
   return {
     props: {
@@ -67,3 +39,31 @@ export async function getStaticProps({ params }: { params: { produk: string } })
     },
   };
 }
+
+// {digunakan static-site generation}
+// export async function getStaticPaths() {
+//   const res = await fetch("http://localhost:3000/api/produk");
+//   const response = await res.json();
+
+//   const paths = response.data.map((product: ProductType) => ({
+//     params: { produk: product.id },
+//   }));
+//   // console.log("Paths yang dihasilkan untuk produk:", paths);
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// }
+
+// export async function getStaticProps({ params }: { params: { produk: string } }) {
+//   const res = await fetch(`http://localhost:3000/api/produk/${params?.produk}`);
+//   // const const response: ProductType[] = await res.json();
+//   const response: { data: ProductType[] } = await res.json();
+
+//   // console.log("Data produk yang diambil dari API:", response);
+//   return {
+//     props: {
+//       product: response.data,
+//     },
+//   };
+// }
