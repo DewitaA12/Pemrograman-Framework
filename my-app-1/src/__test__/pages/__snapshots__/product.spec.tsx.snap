@@ -11,6 +11,7 @@ exports[`Product Page renders product page correctly 1`] = `
         >
           <h1
             class="produk__title"
+            data-testid="produk-title"
           >
             Daftar Produk
           </h1>
@@ -19,6 +20,7 @@ exports[`Product Page renders product page correctly 1`] = `
           >
             <div
               class="produk__content__skeleton"
+              data-testid="produk-skeleton"
             >
               <div
                 class="produk__content__skeleton__image"
@@ -45,6 +47,7 @@ exports[`Product Page renders product page correctly 1`] = `
       >
         <h1
           class="produk__title"
+          data-testid="produk-title"
         >
           Daftar Produk
         </h1>
@@ -53,6 +56,7 @@ exports[`Product Page renders product page correctly 1`] = `
         >
           <div
             class="produk__content__skeleton"
+            data-testid="produk-skeleton"
           >
             <div
               class="produk__content__skeleton__image"

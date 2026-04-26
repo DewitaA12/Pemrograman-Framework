@@ -13,7 +13,12 @@ type ProductType = {
 const TampilanProduk = ({ products = [] }: { products: ProductType[] }) => {
   return (
     <div className={styles.produk}>
-      <h1 className={styles.produk__title}>Daftar Produk</h1>
+      <h1
+        data-testid="produk-title"
+        className={styles.produk__title}
+      >
+        Daftar Produk
+      </h1>
 
       <div className={styles.produk__content}>
         {products.length > 0 ? (
@@ -47,7 +52,10 @@ const TampilanProduk = ({ products = [] }: { products: ProductType[] }) => {
             </Link>
           ))
         ) : (
-          <div className={styles.produk__content__skeleton}>
+          <div
+            data-testid="produk-skeleton"
+            className={styles.produk__content__skeleton}
+          >
             <div className={styles.produk__content__skeleton__image}></div>
             <div className={styles.produk__content__skeleton__name}></div>
             <div className={styles.produk__content__skeleton__category}></div>
